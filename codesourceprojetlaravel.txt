@@ -1,0 +1,31 @@
+#!/bin/bash
+
+projectName="laravel-test"
+repoURL="https://github.com/alexm-cell/projetlaravelmesseinalexandre.git"
+
+composer create-project laravel/laravel $projectName
+cd $projectName
+
+cp .env.example .env
+php artisan key:generate
+
+composer require laravel/breeze --dev
+php artisan breeze:install blade
+
+npm install
+npm run dev
+
+php artisan migrate
+
+composer require livewire/livewire
+php artisan make:livewire BookingManager
+
+composer require filament/filament
+php artisan make:filament-user
+
+git init
+git remote add origin $repoURL
+git add .
+git commit -m "Initialisation du projet Laravel"
+git branch -M main
+git push -u origin main
